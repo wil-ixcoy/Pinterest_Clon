@@ -1,4 +1,3 @@
-
   
 version: '3.3'
 
@@ -6,17 +5,10 @@ services:
   postgres:
     image: postgres:13
     environment:
-      - POSTGRES_DB=blog
-      - POSTGRES_USER=wiliams
-      - POSTGRES_PASSWORD=administrador
+      - POSTGRES_DB=Auth
+      - POSTGRES_USER=Wiliams
+      - POSTGRES_PASSWORD=12345678
     ports:
       - 5432:5432
     volumes:
       - ./postgres_data:/var/lib/postgresql/data
-  pgadmin:
-    image: dpage/pgadmin4
-    environment:
-      - PGADMIN_DEFAULT_EMAIL=administrador@mail.com
-      - PGADMIN_DEFAULT_PASSWORD=root
-    ports:
-      - 8001:80
