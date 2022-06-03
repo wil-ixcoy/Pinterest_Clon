@@ -4,7 +4,12 @@
   "description": "API para autenticacion con distintos proveedores",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node index.js",
+    "serve": "nodemon index.js",
+    "migrations:generate": "sequelize-cli migration:generate --name",
+    "migrations:run": "sequelize-cli db:migrate",
+    "migrations:revert": "sequelize-cli db:migrate:undo",
+    "migrations:delete": "sequelize-cli db:migrate:undo:all"
   },
   "keywords": [
     "Node.js",
@@ -12,7 +17,7 @@
     "sequelize",
     "javascript",
     "passport.js",
-    "Mysql"
+    "Postgres"
   ],
   "author": "Wiliams Alexander Tzoc Ixcoy",
   "license": "MIT",
