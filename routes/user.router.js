@@ -1,11 +1,11 @@
 const express = require("express");
-const validatorHandler = require("./middlewares/validator.handler");
+const validatorHandler = require("../middlewares/validator.handler");
 const {
   createUserSchema,
   getUserSchema,
   updateUserSchema,
   deleteUserSchema,
-} = require("./schemas/user.schema");
+} = require("../schemas/user.schema");
 
 const router = express.Router();
 

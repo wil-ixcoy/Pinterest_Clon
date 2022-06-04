@@ -7,6 +7,7 @@ config = {
   db_host: process.env.DB_HOST,
   db_name: process.env.DB_NAME,
   database_url: process.env.DATABASE_URL,
+  isProd: process.env.NODE_ENV === "production",
 };
 
 module.exports = config;
