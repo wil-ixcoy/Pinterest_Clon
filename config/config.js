@@ -1,6 +1,7 @@
 require("dotenv").config();
 
 config = {
+  env: process.env.NODE_ENV || "development",
   port: process.env.PORT || 3000,
   user_db: process.env.USER_DB,
   db_password: process.env.DB_PASSWORD,
@@ -10,4 +11,4 @@ config = {
   isProd: process.env.NODE_ENV === "production",
 };
 
-module.exports = config;
+module.exports = { config };
