@@ -6,30 +6,25 @@ const lastName = joi.string().min(3).max(30);
 const email = joi.string().email();
 const password = joi.string().min(6).max(30);
 
-const createUserSchema = {
+const createUserSchema = joi.object({
   name: name.required(),
   lastName: lastName.required(),
   email: email.required(),
   password: password.required(),
-};
+});
 
-const getUserSchema = {
+const getUserSchema = joi.object({
   id: id.required(),
-};
+});
 
-const updateUserSchema = {
-  id: id.required(),
+const updateUserSchema = joi.object({
   name: name,
   lastName: lastName,
   email: email,
-};
-const deleteUserSchema = {
-  id: id.required(),
-};
+});
 
 module.exports = {
   createUserSchema,
   getUserSchema,
   updateUserSchema,
-  deleteUserSchema,
 };
