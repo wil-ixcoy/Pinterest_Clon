@@ -1,5 +1,5 @@
 const { DataTypes, Model, Sequelize } = require("sequelize");
-
+const { USER_TABLE } = require("./user.model");
 const IMAGE_TABLE = "images";
 
 const ImageSchema = {
@@ -32,6 +32,17 @@ const ImageSchema = {
     type: DataTypes.STRING,
     allowNull: false,
   },
+  userId: {
+    field: "user_id",
+    type: DataTypes.INTEGER,
+    allowNull: false,
+    references: {
+      model: USER_TABLE,
+      key: "id",
+    },
+    onUpdate: "CASCADE",
+    onDelete: "CASCADE",
+  },
   createdAt: {
     type: DataTypes.DATE,
     allowNull: false,
@@ -39,9 +50,12 @@ const ImageSchema = {
     defaultValue: Sequelize.NOW,
   },
 };
-
 class Image extends Model {
-  static associate(models) {}
+  static associate(models) {
+    this.belongsTo(models.User, {
+      as: "user",
+    });
+  }
   static config(sequelize) {
     return {
       sequelize,

@@ -1,14 +1,13 @@
 const joi = require("joi");
 
 const id = joi.number().integer();
-const title = joi.string().min(3).max(30);
+const name = joi.string().min(3).max(30);
 const description = joi.string();
-const image = joi.string();
-
+const userId = joi.number().integer();
 const createImageSchema = joi.object({
-  title: title.required(),
-  description: description.required(),
-  image: image.required(),
+  userId,
+  name,
+  description,
 });
 
 const getImageSchema = joi.object({
@@ -16,13 +15,12 @@ const getImageSchema = joi.object({
 });
 
 const updateImageSchema = joi.object({
-  title: title,
+  name: name,
   description: description,
-  image: image,
 });
 
 module.exports = {
   createImageSchema,
-  getImageSchema ,
+  getImageSchema,
   updateImageSchema,
 };

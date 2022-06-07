@@ -15,25 +15,31 @@ const router = express.Router();
 const service = new ImageService();
 
 /* crear */
-router.post("/", uploadImageHandler.single("file"), async (req, res, next) => {
-  try {
-    await helperImage(req.file.path, `resized-${req.file.filename}`);
+router.post(
+  "/",
+  validatorHandler(createImageSchema, "body"),
+  uploadImageHandler.single("file"),
+  async (req, res, next) => {
+    try {
+      await helperImage(req.file.path, `resized-${req.file.filename}`);
 
-    const data = {
-      name: req.body.name,
-      description: req.body.description,
-      filename: req.file.filename,
-      path:req.file.path,
-      originalname: req.file.originalname,
-      mimetype: req.file.mimetype,
-      size: req.file.size,
-    };
-    const result = await service.create(data);
-    res.json(result);
-  } catch (e) {
-    next(e);
+      const data = {
+        name: req.body.name,
+        description: req.body.description,
+        filename: req.file.filename,
+        path: req.file.path,
+        originalname: req.file.originalname,
+        mimetype: req.file.mimetype,
+        size: req.file.size,
+        userId: req.body.userId,
+      };
+      const result = await service.create(data);
+      res.json(result);
+    } catch (e) {
+      next(e);
+    }
   }
-});
+);
 /* obtener todos los usuarios */
 router.get("/", async (req, res, next) => {
   try {
