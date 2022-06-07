@@ -7,11 +7,11 @@ class ImageService {
     return uploadImage;
   }
   async findOne(id) {
-    const image = await models.Image.findByPk(id);
+    const image = await models.Image.findByPk(id, { include: ["user"] });
     return image;
   }
   async findAll() {
-    const allImages = await models.Image.findAll();
+    const allImages = await models.Image.findAll({ include: ["user"] });
     return allImages;
   }
   async update(id, updateData) {

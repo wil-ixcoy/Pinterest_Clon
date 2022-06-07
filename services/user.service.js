@@ -14,11 +14,11 @@ class UserService {
     return newUser;
   }
   async findOne(id) {
-    const user = await models.User.findByPk(id);
+    const user = await models.User.findByPk(id,{ include: ["images"] });
     return user;
   }
   async findAll() {
-    const allUser = await models.User.findAll();
+    const allUser = await models.User.findAll({ include: ["images"] });
     return allUser;
   }
   async update(id, updateData) {
