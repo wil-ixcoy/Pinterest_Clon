@@ -17,10 +17,19 @@ const service = new ImageService();
 /* crear */
 router.post("/", uploadImageHandler.single("file"), async (req, res, next) => {
   try {
-    helperImage(req.file.path, `resized-${req.file.filename}`,100);
-    res.json({
-      message: "Imagen cargada correctamente",
-    });
+    await helperImage(req.file.path, `resized-${req.file.filename}`);
+
+    const data = {
+      name: req.body.name,
+      description: req.body.description,
+      filename: req.file.filename,
+      path:req.file.path,
+      originalname: req.file.originalname,
+      mimetype: req.file.mimetype,
+      size: req.file.size,
+    };
+    const result = await service.create(data);
+    res.json(result);
   } catch (e) {
     next(e);
   }

@@ -7,13 +7,28 @@ const ImageSchema = {
     type: DataTypes.INTEGER,
     primaryKey: true,
     autoIncrement: true,
-    allowNull: false,
   },
   name: {
     type: DataTypes.STRING,
     allowNull: false,
   },
+  description: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  filename: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
   path: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  originalname: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  mimetype: {
     type: DataTypes.STRING,
     allowNull: false,
   },
@@ -26,19 +41,19 @@ const ImageSchema = {
 };
 
 class Image extends Model {
-    static associate(models) {}
-    static config(sequelize) {
-      return {
-        sequelize,
-        tableName: IMAGE_TABLE,
-        timestamps: false,
-        modelName: "Image",
-      };
-    }
+  static associate(models) {}
+  static config(sequelize) {
+    return {
+      sequelize,
+      tableName: IMAGE_TABLE,
+      timestamps: false,
+      modelName: "Image",
+    };
   }
-  
-  module.exports = {
-    Image,
-    ImageSchema,
-    IMAGE_TABLE,
-  };
+}
+
+module.exports = {
+  Image,
+  ImageSchema,
+  IMAGE_TABLE,
+};
