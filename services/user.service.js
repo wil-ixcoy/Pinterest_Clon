@@ -1,5 +1,4 @@
 const boom = require("@hapi/boom");
-const { throws } = require("assert");
 const bcrypt = require("bcrypt");
 const { models } = require("../libs/sequelize");
 
@@ -15,10 +14,14 @@ class UserService {
   }
   async findOne(id) {
     const user = await models.User.findByPk(id, { include: ["images"] });
+    delete user.dataValues.password;
     return user;
   }
   async findAll() {
     const allUser = await models.User.findAll({ include: ["images"] });
+    for (const user of allUser) {
+      delete user.dataValues.password;
+    }
     return allUser;
   }
   async update(id, updateData) {
@@ -26,8 +29,9 @@ class UserService {
     if (!User) {
       throw boom.notFound("El usuario no existe");
     }
-    const newData = await User.update(updateData);
-    return newData;
+    const userUpdated = await User.update(updateData);
+    delete userUpdated.dataValues.password;
+    return userUpdated;
   }
   async delete(id) {
     const user = await models.User.findByPk(id);

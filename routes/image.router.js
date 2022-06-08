@@ -1,4 +1,5 @@
 const express = require("express");
+const passport = require("passport");
 const ImageService = require("../services/image.service");
 const validatorHandler = require("../middlewares/validator.handler");
 const {
@@ -53,6 +54,7 @@ router.get("/", async (req, res, next) => {
 router.get(
   "/:id",
   validatorHandler(getImageSchema, "params"),
+  passport.authenticate("jwt", { session: false }),
   async (req, res, next) => {
     try {
       const { id } = req.params;
@@ -67,6 +69,7 @@ router.patch(
   "/:id",
   validatorHandler(getImageSchema, "params"),
   validatorHandler(updateImageSchema, "body"),
+  passport.authenticate("jwt", { session: false }),
   async (req, res, next) => {
     try {
       const { id } = req.params;
@@ -78,12 +81,18 @@ router.patch(
     }
   }
 );
-router.delete("/:id", async (req, res) => {
-  try {
-    const { id } = req.params;
+router.delete(
+  "/:id",
+  passport.authenticate("jwt", { session: false }),
+  validatorHandler(getImageSchema, "params"),
 
-    const imageDeleted = await service.delete(id);
-    res.json(imageDeleted);
-  } catch (err) {}
-});
+  async (req, res) => {
+    try {
+      const { id } = req.params;
+
+      const imageDeleted = await service.delete(id);
+      res.json(imageDeleted);
+    } catch (err) {}
+  }
+);
 module.exports = router;
