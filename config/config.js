@@ -9,6 +9,7 @@ config = {
   db_name: process.env.DB_NAME,
   database_url: process.env.DATABASE_URL,
   isProd: process.env.NODE_ENV === "production",
+  jwtSecret: process.env.SECRET_JWT,
 };
 
 module.exports = { config };

@@ -14,7 +14,7 @@ class UserService {
     return newUser;
   }
   async findOne(id) {
-    const user = await models.User.findByPk(id,{ include: ["images"] });
+    const user = await models.User.findByPk(id, { include: ["images"] });
     return user;
   }
   async findAll() {
@@ -35,6 +35,11 @@ class UserService {
     return {
       message: "Usuario eliminado",
     };
+  }
+
+  async findByEmail(email) {
+    const user = await models.User.findOne({ where: { email } });
+    return user;
   }
 }
 

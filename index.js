@@ -6,6 +6,7 @@ const {
   boomErrorHandler,
   ormErrorHandler,
 } = require("./middlewares/error.handler");
+require("./utils/auth/index");
 const app = express();
 const indexRouter = require("./routes/index.js");
 /* middleware para recibir informacion en formato json */
