@@ -10,6 +10,8 @@ config = {
   database_url: process.env.DATABASE_URL,
   isProd: process.env.NODE_ENV === "production",
   jwtSecret: process.env.SECRET_JWT,
+  googleClient: process.env.GOOGLE_CLIENT_ID,
+  googleSecret: process.env.GOOGLE_CLIENT_SECRET,
 };
 
 module.exports = { config };

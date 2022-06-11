@@ -18,5 +18,22 @@ router.post(
     }
   }
 );
+router.get(
+  "/google",
+  passport.authenticate("google", {
+    scope: [
+      "https://www.googleapis.com/auth/userinfo.profile",
+      "https://www.googleapis.com/auth/userinfo.email",
+    ],
+  }),
+  async (req, res, next) => {
+    try {
+      const user = req.user;
+      res.json(user);
+    } catch (e) {
+      next(e);
+    }
+  }
+);
 
 module.exports = router;
