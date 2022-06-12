@@ -18,6 +18,7 @@ router.post(
     }
   }
 );
+
 router.get(
   "/google",
   passport.authenticate("google", {
@@ -36,4 +37,16 @@ router.get(
   }
 );
 
+router.get(
+  "/facebook",
+  passport.authenticate("facebook"),
+  async (req, res, next) => {
+    try {
+      const user = req.user;
+      res.json(user);
+    } catch (e) {
+      next(e);
+    }
+  }
+);
 module.exports = router;
