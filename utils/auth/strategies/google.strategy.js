@@ -1,22 +1,39 @@
 /* create a trategy with google */
 const GoogleStrategy = require("passport-google-oauth20").Strategy;
+const passport = require("passport");
 require("dotenv").config();
-const emails =["wiliamsg200295@gmail.com"]
+
+passport.serializeUser(function (user, done) {
+  done(null, user);
+});
+passport.deserializeUser(function (user, done) {
+  done(null, user);
+});
+
+const UserService = require("../../../services/user.service");
+const AuthService = require("../../../services/auth.service");
+
+let service = new UserService();
+let authService = new AuthService();
+
 const googleStrategy = new GoogleStrategy(
   {
     clientID: process.env.GOOGLE_CLIENT_ID,
     clientSecret: process.env.GOGOLE_CLIENT_SECRET,
     callbackURL: "http://localhost:3000/api/auth/google",
   },
-  function (accessToken, refreshToken, profile, done) {
-    console.log(profile.emails[0].value);
-    const response = emails.includes(profile.emails[0].value);
 
-    if (response) {
-      done(null, profile);
-    } else {
-      emails.push(profile.emails[0].value);
-      done(null, profile);
+  async (accessToken, refreshToken, profile, done) => {
+    try {
+      let user = await service.findByEmail(profile.emails[0].value);
+      if (!user) {
+        return done(null, "El email no esta registrado");
+      } else {
+        let token = await authService.createTokenJWT(user);
+        return done(null, token);
+      }
+    } catch (e) {
+      return done(e, null);
     }
   }
 );
