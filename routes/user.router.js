@@ -13,8 +13,166 @@ const {
 const router = express.Router();
 const service = new UserService();
 const authService = new AuthService();
+/**
+ *@swagger
+ * components:
+ *  schemas:
+ *
+ *    UserCreate:
+ *      type: object
+ *      properties:
+ *        name:
+ *          type: string
+ *        lastName:
+ *          type: string
+ *        email:
+ *          type: string
+ *          format: email
+ *        password:
+ *          type: string
+ *          format: password
+ *      required:
+ *        - name
+ *        - lastName
+ *        - email
+ *        - password
+ *      example:
+ *        name: "Wiliams Alexander"
+ *        lastName: "Tzoc Ixcoy"
+ *        email: "wiliamscode34@gmail.com"
+ *        password: "123456789"
+ *
+ *    UserUpdate:
+ *      type: object
+ *      properties:
+ *        name:
+ *          type: string
+ *        lastName:
+ *          type: string
+ *        email:
+ *          type: string
+ *          format: email
+ *      example:
+ *        name: "Wiliams Alexander"
+ *        lastName: "Tzoc Ixcoy"
+ *        email: "wiliamscode34@gmail.com"
+ *
+ *    ResponseCreateUser:
+ *      type: object
+ *      properties:
+ *        id:
+ *          type: number
+ *        name:
+ *          type: string
+ *        lastName:
+ *          type: string
+ *        email:
+ *          type: string
+ *          format: email
+ *        createdAt:
+ *          type: string
+ *          format: date-time
+ *        images:
+ *         type: array
+ *        token:
+ *          type: string
+ *      example:
+ *        id: 1
+ *        name: "Wiliams Alexander"
+ *        lastName: "Tzoc Ixcoy"
+ *        email: "wiliamscode34@gmail.com"
+ *        createdAt: "2020-05-05T17:00:00.000Z"
+ *        images: []
+ *        token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsInJvbGUiOiJhZG1pbiIsImlhdCI6MTY1MjUzNzQyN30.zTXbt6851Mr79mBkje5Bo301msbwQKLdtULOrFc22L0"
+ *
+ *    ResponseGetAllUser:
+ *      type: object
+ *      properties:
+ *        id:
+ *         type: number
+ *        name:
+ *          type: string
+ *        lastName:
+ *          type: string
+ *        email:
+ *          type: string
+ *          format: email
+ *        createdAt:
+ *          type: string
+ *          format: date-time
+ *      example:
+ *        id: 1
+ *        name: "Wiliams Alexander"
+ *        lastName: "Tzoc Ixcoy"
+ *        email: "wiliamscode34@gmail.com"
+ *        createdAt: "2020-05-05T17:00:00.000Z"
 
-/* crear */
+ *
+ *    ResponseGetOneUser:
+ *      type: object
+ *      properties:
+ *        id:
+ *         type: number
+ *        name:
+ *          type: string
+ *        lastName:
+ *          type: string
+ *        email:
+ *          type: string
+ *          format: email
+ *        createdAt:
+ *          type: string
+ *          format: date-time
+ *        images:
+ *         type: object
+ *      example:
+ *        id: 1
+ *        name: "Wiliams Alexander"
+ *        lastName: "Tzoc Ixcoy"
+ *        email: "wiliamscode34@gmail.com"
+ *        createdAt: "2020-05-05T17:00:00.000Z"
+ *        images: [{
+ *         createdAt": "2022-06-14T22:57:40.837Z",
+ *	       id: 1,
+ *	       name: "Imagen de monitor",
+ *	       description: "Foto de monitor gamer con fondo rojo y negro",
+ *	       filename: "1655247459806.jpg",
+ *	       path: "/home/wiliams-ixcoy/Desktop/node.js/autenticacion/public/images/1655247459806.jpg",
+ *	       originalname: "fotis-fotopoulos-6sAl6aQ4OWI-unsplash.jpg",
+ *	       mimetype: "image/jpeg",
+ *	       userId: 1
+ *        }]
+ */
+
+/**
+ * @swagger
+ * /api/users:
+ *  post:
+ *    description: Crea un nuevo usuario
+ *    tags: [User]
+ *    requestBody:
+ *      required: true
+ *      content:
+ *        application/json:
+ *          schema:
+ *             $ref: '#/components/schemas/UserCreate'
+ *    responses:
+ *      200:
+ *       description: Estatus de usuario creado correctamente
+ *       content:
+ *        application/json:
+ *          schema:
+ *            type: array
+ *            items:
+ *              $ref: '#/components/schemas/ResponseCreateUser'
+ *      409:
+ *       description: email bust be unique
+ *      400:
+ *       description: Bad request
+ *      500:
+ *       description: Internal server error
+ *
+ */
 router.post(
   "/",
   validatorHandler(createUserSchema, "body"),
@@ -23,17 +181,43 @@ router.post(
       const data = req.body;
       const newUser = await service.create(data);
       const user = await service.findOne(newUser.id);
-      const token = await authService.createTokenJWT(user);
+      const Token = await authService.createTokenJWT(user);
+      let token = Token.token;
       res.json({
         user,
-        token,
+        token
       });
     } catch (e) {
       next(e);
     }
   }
 );
+
 /* obtener todos los usuarios */
+/**
+ * @swagger
+ * /api/users:
+ *  get:
+ *    description: Obtiene todos los usuarios
+ *    tags: [User]
+ *    responses:
+ *      200:
+ *       description: Lista de todos los usuarios
+ *       content:
+ *        application/json:
+ *          schema:
+ *            type: array
+ *            items:
+ *              $ref: '#/components/schemas/ResponseGetAllUser'
+ *      400:
+ *       description: Bad request
+ *      401:
+ *       description: unauthorized
+ *      409:
+ *       description: conflict
+ *      500:
+ *       description: Internal server error
+ */
 router.get("/", async (req, res, next) => {
   try {
     const allUsers = await service.findAll();
@@ -42,7 +226,39 @@ router.get("/", async (req, res, next) => {
     next(err);
   }
 });
+
 /* obtener un solo usuario */
+/**
+ * @swagger
+ * /api/users/{id}:
+ *  get:
+ *    description: Obtiene un solo usuario, necesita token de autorizacion
+ *    tags: [User]
+ *    parameters:
+ *     - in: path
+ *       name: id
+ *       schema:
+ *        type: number
+ *    responses:
+ *      200:
+ *       description: Retorna al usuario que fue buscado
+ *       content:
+ *        application/json:
+ *          schema:
+ *            type: array
+ *            items:
+ *              $ref: '#/components/schemas/ResponseGetOneUser'
+ *      400:
+ *       description: Bad request
+ *      401:
+ *       description: unauthorized
+ *      404:
+ *       description: Admin not found
+ *      409:
+ *       description: conflict
+ *      500:
+ *       description: Internal server error
+ */
 router.get(
   "/:id",
   validatorHandler(getUserSchema, "params"),
@@ -57,6 +273,43 @@ router.get(
     }
   }
 );
+
+/**
+ * @swagger
+ * api/users/{id}:
+ *  patch:
+ *    description: Actualiza un usuario, ni un dato es requerido, se puede cambiar un solo campo o varios, necesita token de autorizacion
+ *    tags: [User]
+ *    parameters:
+ *     - in: path
+ *       name: id
+ *       schema:
+ *        type: number
+ *    requestBody:
+ *      content:
+ *        application/json:
+ *          schema:
+ *             $ref: '#/components/schemas/UserUpdate'
+ *    responses:
+ *      200:
+ *       description: Datos actualizados.retorna toda la información del usuario
+ *       content:
+ *        application/json:
+ *          schema:
+ *            type: array
+ *            items:
+ *              $ref: '#/components/schemas/ResponseGetOneUser'
+ *      400:
+ *       description: Bad request
+ *      401:
+ *       description: unauthorized
+ *      404:
+ *       description: Admin not found
+ *      409:
+ *       description: conflict
+ *      500:
+ *       description: Internal server error
+ */
 router.patch(
   "/:id",
   validatorHandler(getUserSchema, "params"),
@@ -73,6 +326,40 @@ router.patch(
     }
   }
 );
+
+/**
+ * @swagger
+ * /api/users/{id}:
+ *  delete:
+ *    description: elimina un usuario, necesita token de autorizacion
+ *    tags: [User]
+ *    parameters:
+ *     - in: path
+ *       name: id
+ *       schema:
+ *        type: number
+ *    responses:
+ *      200:
+ *       description: Usuario eliminado
+ *       content:
+ *        application/json:
+ *         schema:
+ *          type: object
+ *          properties:
+ *           message:
+ *            type: string
+ *          example: "User deleted"
+ *      400:
+ *       description: Bad request
+ *      401:
+ *       description: unauthorized
+ *      404:
+ *       description: Admin not found
+ *      409:
+ *       description: conflict
+ *      500:
+ *       description: Internal server error
+ */
 router.delete(
   "/:id",
   validatorHandler(getUserSchema, "params"),
@@ -83,7 +370,7 @@ router.delete(
 
       const userDeleted = await service.delete(id);
       res.json(userDeleted);
-    } catch (err) {}
+    } catch (err) { }
   }
 );
 module.exports = router;
