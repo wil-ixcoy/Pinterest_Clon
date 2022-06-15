@@ -33,7 +33,6 @@ app.use(
   swaggerUi.setup(swaggerJSDoc(swaggerSpect))
 );
 app.use(ormErrorHandler);
-
 app.use(logErrors);
 app.use(errorHandler);
 app.use(boomErrorHandler);

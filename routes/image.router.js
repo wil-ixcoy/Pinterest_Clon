@@ -90,15 +90,13 @@ const service = new ImageService();
  *             $ref: '#/components/schemas/imageUpload'
  *    responses:
  *      200:
- *       description: Estatus de imagen creado correctamente
+ *       description: Imagen subida correctamente
  *       content:
  *        application/json:
  *          schema:
  *            type: array
  *            items:
  *              $ref: '#/components/schemas/ResponseUploadImage'
- *      409:
- *       description: email bust be unique
  *      400:
  *       description: Bad request
  *      500:
@@ -184,6 +182,8 @@ router.get("/", async (req, res, next) => {
  *       description: Bad request
  *      401:
  *       description: unauthorized
+ *      404:
+ *       description: La imagen no existe
  *      409:
  *       description: conflict
  *      500:
@@ -233,7 +233,7 @@ router.get(
  *      401:
  *       description: unauthorized
  *      404:
- *       description: Admin not found
+ *       description: La imagen no existe
  *      409:
  *       description: conflict
  *      500:
@@ -283,7 +283,7 @@ router.patch(
  *      401:
  *       description: unauthorized
  *      404:
- *       description: user not found
+ *       description: La imagen no existe
  *      409:
  *       description: conflict
  *      500:

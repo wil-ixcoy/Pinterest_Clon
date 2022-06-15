@@ -117,10 +117,10 @@ const authService = new AuthService();
  *            type: array
  *            items:
  *              $ref: '#/components/schemas/ResponseCreateUser'
- *      409:
- *       description: email bust be unique
  *      400:
  *       description: Bad request
+ *      409:
+ *       description: email bust be unique
  *      500:
  *       description: Internal server error
  *
@@ -205,7 +205,7 @@ router.get("/", async (req, res, next) => {
  *      401:
  *       description: unauthorized
  *      404:
- *       description: user not found
+ *       description: El usuario no existe
  *      409:
  *       description: conflict
  *      500:
@@ -256,7 +256,7 @@ router.get(
  *      401:
  *       description: unauthorized
  *      404:
- *       description: user not found
+ *       description: El usuario no existe
  *      409:
  *       description: conflict
  *      500:
@@ -306,7 +306,7 @@ router.patch(
  *      401:
  *       description: unauthorized
  *      404:
- *       description: user not found
+ *       description: El usuario no existe
  *      409:
  *       description: conflict
  *      500:
