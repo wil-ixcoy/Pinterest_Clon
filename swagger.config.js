@@ -2,67 +2,61 @@
 
 
 const swaggerSpect = {
-    definition: {
-      openapi: '3.0.0',
-      info: {
-        title: 'API BLOG',
-        version: '1.0.0',
-        description: `<h1><b>Documentación de la API para un blog, hecha con NodeJS, Express, Postgres, Sequelize, Docker, Passport.js y Swagger</b></h1> <br>
-          Como parte de la práctica de desarrollo de aplicaciones web, se ha desarrollado una API RESTful para un blog que contiene los siguientes servicios:
-          <ul>
-            <li>Autenticación de usuarios y administradores</li>
-            <li>CRUD de usuarios</li>
-            <li>CRUD de Administrdores</li>
-            <li>CRUD de Categorías</li>
-            <li>CRUD de Posts</li>
-            <li>CRUD de Comentarios</li>
-          </ul>
-          <h2>Funciones de los administradores</h2>
-          <ul>
-            <li>Crear una nueva categoría</li>
-            <li>Actualizar una categoría</li>
-            <li>Eliminar una categoría</li>
-            <li>Obtener un administrador</li>
-            <li>Obtener todos los administradores</li>
-            <li>Obtener uno o todos los usuarios</li>
-            <li>Todas las funciones de administrador requiere el token y el rol de admin(el rol es creado de manera automática)</li>
-            <li>No pueden crear, actualizaro eliminar post y comentarios</li>
-          </ul>
-          <h2>Funciones de los usuarios</h2>
-          <ul>
-            <li>Crear un post o comentario propio</li>
-            <li>Actualizar un post o comentario propio</li>
-            <li>Eliminar un post o comentario propio</li>
-            <li>Obtener uno o todos los usuarios</li>
-            <li>Todas las funciones de administrador requiere el token y el rol de user(el rol es creado de manera automática)</li>
-          </ul>
-          <h2>Usuarios, administradores y personas no registradas pueden: </h2>
-          <ul>
-            <li>Obtener una o todas la categorías</li>
-            <li>Obtener uno o todos los posts</li>
-            <li>Obtener uno o todos los comentarios</li>
-          </ul>
-          <h3>Todos las funciones de crear, actualizar y eliminar, requieren token, este es de tipo Barer</h3>
+  definition: {
+    openapi: '3.0.0',
+    info: {
+      title: 'Clon de Pinterest',
+      version: '1.0.0',
+      description: `<h1><b>Clon de Pinterest, hecha con NodeJS, Express, Postgres, Sequelize, Docker, Passport.js y Swagger</b></h1> <br>
+      Proyecto realizado con el objetivo de mejorar mis habilidades en el desarrollo de aplicaciones web del lado del servidor, de la misma manera
+      a utilizar nuevos paquetes de node.js como multer.
+      <h2>Secciones</h2>
+      <h3>1. Autenticación</h3>
+      <p>En esta sección se puede iniciar sesión por parte del usuario ya registrado, esto se logra mediante email y contraseña, Google y Twitter.</p>
+      <p>Al iniciar sesión mediante cualquier método, obtienes el token.</p>
+      <br>
+      <h3>2. Usuarios</h3>
+      <p>En la sección de usuarios, se puede registrar, obtener todos los usuarios, obtener un usuario, actualizar y eliminar.</p>
+      <p>Para la parte de obtener un solo usuario, actualizar y eliminar requiere de un token de tipo Bearer.</p>
+      <br>
+      <h3>3. Imágenes</h3>
+      <p>En la sección de imágenes, se puede subir una imagen con titulo y descripción, obtener todas las imágenes, obtener una imagen, actualizar el titulo o descripción y eliminar.</p>
+      <p>Todas las acciones requiren del token.</p>
+      <p>Además, las imagenes son redimensionadas para no perder el tamaño y tener uniformidad en el frontend</p>
+      <br>
           <a href="https://www.linkedin.com/in/wiliams-ixcoy-656074229/">Perfil de linkedIn 💙</a> <br>
-          <a href="https://github.com/Wiliams-wq/API_Blog">Link del repositorio en GitHub 🖤</a> <br>
-          <a href="https://twitter.com/wiliCode">Perfil de Twitter 💚</a>
+          <a href="https://github.com/wiliamsTI/Clon_Pinterest">Link del repositorio en GitHub 🖤</a> <br>
+          <a href="https://twitter.com/wiliamsTI">Perfil de Twitter 💚</a>
           <br>
           <br>
-          <h4>Wiliams Alexander Tzoc Ixcoy, 15 de mayo de 2,022</h4>
+          <h4>Wiliams Alexander Tzoc Ixcoy, 15 de Junio de 2,022</h4>
           `,
-      },
-      servers: [
-        {
-          url: 'http://localhost:3000/',
-          description: 'Localhost',
-        },
-        {
-          url: 'https://arcane-castle-52549.herokuapp.com/api/v1',
-          description: 'Heroku',
-        },
-      ],
     },
-    apis: ['./routes/*.js'],
-  };
-  
-  module.exports = swaggerSpect;
+    /* create configuration for auth bearer */
+    components: {
+      securitySchemes: {
+        bearerAuth: {
+          type: 'http',
+          scheme: 'bearer',
+          in: 'header',
+          name: 'Authorization',
+          description: 'Inicia sesión o registrate, obtén el token y escribelo en el campo de autorización',
+        },
+      },
+    },
+    security: [{ bearerAuth: [] }],
+    servers: [
+      {
+        url: 'http://localhost:3000/',
+        description: 'Localhost',
+      },
+      {
+        url: 'https://arcane-castle-52549.herokuapp.com/api/v1',
+        description: 'Heroku',
+      },
+    ],
+  },
+  apis: ['./routes/*.js'],
+};
+
+module.exports = swaggerSpect;

@@ -19,7 +19,7 @@ const service = new ImageService();
  *@swagger
  * components:
  *  schemas:
- *
+ * 
  *    imageUpload:
  *      type: object
  *      properties:
@@ -169,6 +169,11 @@ router.get("/", async (req, res, next) => {
  *  get:
  *    description: Obtiene todas las imagenes
  *    tags: [Images]
+  *    parameters:
+ *     - in: path
+ *       name: id
+ *       schema:
+ *        type: number
  *    responses:
  *      200:
  *       description: Lista todas las imagenes
