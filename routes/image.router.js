@@ -15,10 +15,100 @@ const {
 const router = express.Router();
 const service = new ImageService();
 
-/* crear */
+/**
+ *@swagger
+ * components:
+ *  schemas:
+ *
+ *    imageUpload:
+ *      type: object
+ *      properties:
+ *        userId:
+ *          type: number
+ *        name:
+ *          type: string
+ *        description:
+ *          type: string
+ *        file:
+ *          type: file
+ *      required:
+ *        - userId
+ *        - name
+ *        - description
+ *        - file
+ *      example:
+ *        userId: 1
+ *        name: "Imagen de un monitor"
+ *        description: "Imagen de un monitor"
+ *        file: "image.jpg"
+ *
+ *    ImageUpdate:
+ *      type: object
+ *      properties:
+ *        userId:
+ *          type: number
+ *        name:
+ *          type: string
+ *        description:
+ *          type: string
+ *      example:
+ *        name: "Imagen de un monitor"
+ *        description: "Imagen de un monitor"
+ *
+ *
+ *    ResponseImages:
+ *      example:
+ *        id: 1
+ *        name: "Imagen de un monitor"
+ *        description: "Imagen de un monitor"
+ *        filename: "1655247459806.jpg"
+ *        path: "/home/wiliams-ixcoy/Desktop/node.js/autenticacion/public/images/1655247459806.jpg"
+ *        originalname: "fotis-fotopoulos-6sAl6aQ4OWI-unsplash.jpg"
+ *        mimetype: "image/jpeg"
+ *        userId: 1
+ *        user: {
+ *         id: 1,
+ *         name: "Wiliams Alexander",
+ *         description: "Tzoc Ixcoy",
+ *         email: "wiliamscode34@gmail.com",
+ *         createdAt: "2020-05-05T17:00:00.000Z",
+ *         }
+ *
+ */
+
+/**
+ * @swagger
+ * /api/images:
+ *  post:
+ *    description: Sube una imagen
+ *    tags: [Images]
+ *    requestBody:
+ *      required: true
+ *      content:
+ *        multipart/form-data:
+ *          schema:
+ *             $ref: '#/components/schemas/imageUpload'
+ *    responses:
+ *      200:
+ *       description: Estatus de imagen creado correctamente
+ *       content:
+ *        application/json:
+ *          schema:
+ *            type: array
+ *            items:
+ *              $ref: '#/components/schemas/ResponseUploadImage'
+ *      409:
+ *       description: email bust be unique
+ *      400:
+ *       description: Bad request
+ *      500:
+ *       description: Internal server error
+ *
+ */
 router.post(
   "/",
   validatorHandler(createImageSchema, "body"),
+  passport.authenticate("jwt", { session: false }),
   uploadImageHandler.single("file"),
   async (req, res, next) => {
     try {
@@ -42,6 +132,30 @@ router.post(
   }
 );
 /* obtener todos los usuarios */
+/**
+ * @swagger
+ * /api/images:
+ *  get:
+ *    description: Obtiene todas las imagenes
+ *    tags: [Images]
+ *    responses:
+ *      200:
+ *       description: Lista todas las imagenes
+ *       content:
+ *        application/json:
+ *          schema:
+ *            type: array
+ *            items:
+ *              $ref: '#/components/schemas/ResponseImages'
+ *      400:
+ *       description: Bad request
+ *      401:
+ *       description: unauthorized
+ *      409:
+ *       description: conflict
+ *      500:
+ *       description: Internal server error
+ */
 router.get("/", async (req, res, next) => {
   try {
     const allImages = await service.findAll();
@@ -50,7 +164,31 @@ router.get("/", async (req, res, next) => {
     next(err);
   }
 });
-/* obtener un solo usuario */
+/* obtener un solo imagen */
+/**
+ * @swagger
+ * /api/images/{id}:
+ *  get:
+ *    description: Obtiene todas las imagenes
+ *    tags: [Images]
+ *    responses:
+ *      200:
+ *       description: Lista todas las imagenes
+ *       content:
+ *        application/json:
+ *          schema:
+ *            type: array
+ *            items:
+ *              $ref: '#/components/schemas/ResponseImages'
+ *      400:
+ *       description: Bad request
+ *      401:
+ *       description: unauthorized
+ *      409:
+ *       description: conflict
+ *      500:
+ *       description: Internal server error
+ */
 router.get(
   "/:id",
   validatorHandler(getImageSchema, "params"),
@@ -65,6 +203,42 @@ router.get(
     }
   }
 );
+/**
+ * @swagger
+ * api/images/{id}:
+ *  patch:
+ *    description: Actualiza un usuario, ni un dato es requerido, se puede cambiar un solo campo o varios, necesita token de autorizacion
+ *    tags: [Images]
+ *    parameters:
+ *     - in: path
+ *       name: id
+ *       schema:
+ *        type: number
+ *    requestBody:
+ *      content:
+ *        application/json:
+ *          schema:
+ *             $ref: '#/components/schemas/ImageUpdate'
+ *    responses:
+ *      200:
+ *       description: Datos actualizados.retorna toda la información del usuario
+ *       content:
+ *        application/json:
+ *          schema:
+ *            type: array
+ *            items:
+ *              $ref: '#/components/schemas/ResponseImages'
+ *      400:
+ *       description: Bad request
+ *      401:
+ *       description: unauthorized
+ *      404:
+ *       description: Admin not found
+ *      409:
+ *       description: conflict
+ *      500:
+ *       description: Internal server error
+ */
 router.patch(
   "/:id",
   validatorHandler(getImageSchema, "params"),
@@ -81,6 +255,40 @@ router.patch(
     }
   }
 );
+
+/**
+ * @swagger
+ * /api/images/{id}:
+ *  delete:
+ *    description: elimina un usuario, necesita token de autorizacion
+ *    tags: [Images]
+ *    parameters:
+ *     - in: path
+ *       name: id
+ *       schema:
+ *        type: number
+ *    responses:
+ *      200:
+ *       description: Usuario eliminado
+ *       content:
+ *        application/json:
+ *         schema:
+ *          type: object
+ *          properties:
+ *           message:
+ *            type: string
+ *          example: "User deleted"
+ *      400:
+ *       description: Bad request
+ *      401:
+ *       description: unauthorized
+ *      404:
+ *       description: user not found
+ *      409:
+ *       description: conflict
+ *      500:
+ *       description: Internal server error
+ */
 router.delete(
   "/:id",
   passport.authenticate("jwt", { session: false }),
@@ -92,7 +300,7 @@ router.delete(
 
       const imageDeleted = await service.delete(id);
       res.json(imageDeleted);
-    } catch (err) {}
+    } catch (err) { }
   }
 );
 module.exports = router;

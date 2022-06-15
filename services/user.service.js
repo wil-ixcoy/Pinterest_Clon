@@ -14,6 +14,9 @@ class UserService {
   }
   async findOne(id) {
     const user = await models.User.findByPk(id, { include: ["images"] });
+    if (!user) {
+      throw boom.notFound("El usuario no existe");
+    }
     delete user.dataValues.password;
     return user;
   }
@@ -35,6 +38,9 @@ class UserService {
   }
   async delete(id) {
     const user = await models.User.findByPk(id);
+    if (!user) {
+      throw boom.notFound("El usuario no existe");
+    }
     user.destroy();
     return {
       message: "Usuario eliminado",

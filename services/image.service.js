@@ -8,10 +8,17 @@ class ImageService {
   }
   async findOne(id) {
     const image = await models.Image.findByPk(id, { include: ["user"] });
+    if (!image) {
+      throw boom.notFound("La imagen no existe");
+    }
+    delete image.dataValues.user.dataValues.password;
     return image;
   }
   async findAll() {
     const allImages = await models.Image.findAll({ include: ["user"] });
+    for (let i = 0; i < allImages.length; i++) {
+      delete allImages[i].dataValues.user.dataValues.password;
+    }
     return allImages;
   }
   async update(id, updateData) {
@@ -24,6 +31,9 @@ class ImageService {
   }
   async delete(id) {
     const image = await models.Image.findByPk(id);
+    if (!image) {
+      throw boom.notFound("La imagen no existe");
+    }
     image.destroy();
     return {
       message: "Imagen eliminada",

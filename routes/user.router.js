@@ -58,24 +58,6 @@ const authService = new AuthService();
  *        email: "wiliamscode34@gmail.com"
  *
  *    ResponseCreateUser:
- *      type: object
- *      properties:
- *        id:
- *          type: number
- *        name:
- *          type: string
- *        lastName:
- *          type: string
- *        email:
- *          type: string
- *          format: email
- *        createdAt:
- *          type: string
- *          format: date-time
- *        images:
- *         type: array
- *        token:
- *          type: string
  *      example:
  *        id: 1
  *        name: "Wiliams Alexander"
@@ -86,20 +68,6 @@ const authService = new AuthService();
  *        token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsInJvbGUiOiJhZG1pbiIsImlhdCI6MTY1MjUzNzQyN30.zTXbt6851Mr79mBkje5Bo301msbwQKLdtULOrFc22L0"
  *
  *    ResponseGetAllUser:
- *      type: object
- *      properties:
- *        id:
- *         type: number
- *        name:
- *          type: string
- *        lastName:
- *          type: string
- *        email:
- *          type: string
- *          format: email
- *        createdAt:
- *          type: string
- *          format: date-time
  *      example:
  *        id: 1
  *        name: "Wiliams Alexander"
@@ -109,22 +77,6 @@ const authService = new AuthService();
 
  *
  *    ResponseGetOneUser:
- *      type: object
- *      properties:
- *        id:
- *         type: number
- *        name:
- *          type: string
- *        lastName:
- *          type: string
- *        email:
- *          type: string
- *          format: email
- *        createdAt:
- *          type: string
- *          format: date-time
- *        images:
- *         type: object
  *      example:
  *        id: 1
  *        name: "Wiliams Alexander"
@@ -132,7 +84,7 @@ const authService = new AuthService();
  *        email: "wiliamscode34@gmail.com"
  *        createdAt: "2020-05-05T17:00:00.000Z"
  *        images: [{
- *         createdAt": "2022-06-14T22:57:40.837Z",
+ *         createdAt: "2022-06-14T22:57:40.837Z",
  *	       id: 1,
  *	       name: "Imagen de monitor",
  *	       description: "Foto de monitor gamer con fondo rojo y negro",
@@ -158,7 +110,7 @@ const authService = new AuthService();
  *             $ref: '#/components/schemas/UserCreate'
  *    responses:
  *      200:
- *       description: Estatus de usuario creado correctamente
+ *       description: El usuario fue creado
  *       content:
  *        application/json:
  *          schema:
@@ -253,7 +205,7 @@ router.get("/", async (req, res, next) => {
  *      401:
  *       description: unauthorized
  *      404:
- *       description: Admin not found
+ *       description: user not found
  *      409:
  *       description: conflict
  *      500:
@@ -304,7 +256,7 @@ router.get(
  *      401:
  *       description: unauthorized
  *      404:
- *       description: Admin not found
+ *       description: user not found
  *      409:
  *       description: conflict
  *      500:
@@ -354,7 +306,7 @@ router.patch(
  *      401:
  *       description: unauthorized
  *      404:
- *       description: Admin not found
+ *       description: user not found
  *      409:
  *       description: conflict
  *      500:
