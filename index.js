@@ -41,8 +41,9 @@ app.get("/", (req, res) => {
   res.send(`
     <h1><b>Bienvenidos al clon de Pinterest, para saber como funciona la API y poder probarlo ve a 👇:</b></h1>
     <h2>
-      <a href="http://localhost:3000/api/docs" style="text-decoration:none;">
-      http://localhost:3000/api/docs
+      <a href="https://infinite-meadow-99672.herokuapp.com/api/docs" style="text-decoration:none;">
+        https://infinite-meadow-99672.herokuapp.com/api/docs
+      </a>
     </h2>
     <br>
     <h3><b>Si quieres conocerme, estas son mis redes👇:</b></h3>
