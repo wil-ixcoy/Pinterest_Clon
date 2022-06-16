@@ -7,9 +7,12 @@ const swaggerSpect = {
     info: {
       title: 'Clon de Pinterest',
       version: '1.0.0',
-      description: `<h1><b>Clon de Pinterest, hecha con NodeJS, Express, Postgres, Sequelize, Docker, Passport.js y Swagger</b></h1> <br>
+      description: `<h1><b>
+      Clon de Pinterest, realiza con NodeJS, Express, Postgres, Sequelize, Docker, Passport.js, Swagger y Heroku
+      </b></h1>
+      <br>
       Proyecto realizado con el objetivo de mejorar mis habilidades en el desarrollo de aplicaciones web del lado del servidor, de la misma manera
-      a utilizar nuevos paquetes de node.js como multer.
+      a utilizar nuevos paquetes de node.js como multer y el uso de terceros como Google y Facebook para iniciar sesión.
       <h2>Secciones</h2>
       <h3>1. Autenticación</h3>
       <p>En esta sección se puede iniciar sesión por parte del usuario ya registrado, esto se logra mediante email y contraseña, Google y Twitter.</p>
@@ -51,7 +54,7 @@ const swaggerSpect = {
         description: 'Localhost',
       },
       {
-        url: 'https://arcane-castle-52549.herokuapp.com/api/v1',
+        url: 'https://infinite-meadow-99672.herokuapp.com/',
         description: 'Heroku',
       },
     ],
