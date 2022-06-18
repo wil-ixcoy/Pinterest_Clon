@@ -19,6 +19,7 @@ El clon de pinterest es un app realizada con el fin de poder mejorar mis habilid
 ![](https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql&logoColor=white)
 
 **Despliegue en:**
+
 ![](https://img.shields.io/badge/Heroku-430098?style=for-the-badge&logo=heroku&logoColor=white)
 
 ---
