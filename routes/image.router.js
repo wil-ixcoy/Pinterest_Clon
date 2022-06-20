@@ -1,5 +1,13 @@
 const express = require("express");
 const passport = require("passport");
+const cloudinary = require("cloudinary");
+require("dotenv").config();
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_NAME,
+  api_key: process.env.API_KEY_CLOUDINARY,
+  api_secret: process.env.SECRET_CLOUDINARY
+});
+
 const ImageService = require("../services/image.service");
 const validatorHandler = require("../middlewares/validator.handler");
 const {
@@ -112,7 +120,7 @@ router.post(
     try {
       await helperImage(req.file.path, `resized-${req.file.filename}`);
 
-      const data = {
+/*       const data = {
         name: req.body.name,
         description: req.body.description,
         filename: req.file.filename,
@@ -121,8 +129,9 @@ router.post(
         mimetype: req.file.mimetype,
         size: req.file.size,
         userId: req.body.userId,
-      };
-      const result = await service.create(data);
+      }; */
+      const result = await cloudinary.v2.uploader.upload(req.file.path)
+      console.log(result)
       res.json(result);
     } catch (e) {
       next(e);

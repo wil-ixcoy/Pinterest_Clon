@@ -5,9 +5,9 @@ const name = joi.string().min(3).max(30);
 const description = joi.string();
 const userId = joi.number().integer();
 const createImageSchema = joi.object({
-  userId: userId.required(),
-  name: name.required(),
-  description: description.required(),
+  userId,
+  name,
+  description,
 });
 
 const getImageSchema = joi.object({
