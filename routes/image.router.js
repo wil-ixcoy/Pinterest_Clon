@@ -34,7 +34,7 @@ const service = new ImageService();
  *      properties:
  *        userId:
  *          type: number
- *        name:
+ *        title:
  *          type: string
  *        description:
  *          type: string
@@ -42,12 +42,12 @@ const service = new ImageService();
  *          type: file
  *      required:
  *        - userId
- *        - name
+ *        - title
  *        - description
  *        - file
  *      example:
  *        userId: 1
- *        name: "Imagen de un monitor"
+ *        title: "Imagen de un monitor"
  *        description: "Imagen de un monitor"
  *        file: "image.jpg"
  *
@@ -56,28 +56,25 @@ const service = new ImageService();
  *      properties:
  *        userId:
  *          type: number
- *        name:
+ *        title:
  *          type: string
  *        description:
  *          type: string
  *      example:
- *        name: "Imagen de un monitor"
+ *        title: "Imagen de un monitor"
  *        description: "Imagen de un monitor"
  *
  *
  *    ResponseImages:
  *      example:
  *        id: 1
- *        name: "Imagen de un monitor"
+ *        title: "Imagen de un monitor"
  *        description: "Imagen de un monitor"
- *        filename: "1655247459806.jpg"
- *        path: "/home/wiliams-ixcoy/Desktop/node.js/autenticacion/public/images/1655247459806.jpg"
- *        originalname: "fotis-fotopoulos-6sAl6aQ4OWI-unsplash.jpg"
- *        mimetype: "image/jpeg"
+ *        url_image: "http://res.cloudinary.com/dk1mbdqmn/image/upload/v1655691194/qypboxdljgs82w2dx7c7.jpg"
  *        userId: 1
  *        user: {
  *         id: 1,
- *         name: "Wiliams Alexander",
+ *         title: "Wiliams Alexander",
  *         description: "Tzoc Ixcoy",
  *         email: "wiliamscode34@gmail.com",
  *         createdAt: "2020-05-05T17:00:00.000Z",
@@ -119,7 +116,7 @@ router.post(
   uploadImageHandler.single("file"),
   async (req, res, next) => {
     try {
-      const imageResize = await helperImage(req.file.path, `resized-${req.file.filename}`);
+      const imageResize = await helperImage(req.file.path, `resized-${req.file.url_image}`);
       const imageCloudinary = await cloudinary.v2.uploader.upload(imageResize.path);
       console.log(imageResize);
       const data = {
@@ -179,7 +176,7 @@ router.get("/", async (req, res, next) => {
  *    tags: [Images]
   *    parameters:
  *     - in: path
- *       name: id
+ *       title: id
  *       schema:
  *        type: number
  *    responses:
@@ -224,7 +221,7 @@ router.get(
  *    tags: [Images]
  *    parameters:
  *     - in: path
- *       name: id
+ *       title: id
  *       schema:
  *        type: number
  *    requestBody:
@@ -277,7 +274,7 @@ router.patch(
  *    tags: [Images]
  *    parameters:
  *     - in: path
- *       name: id
+ *       title: id
  *       schema:
  *        type: number
  *    responses:
