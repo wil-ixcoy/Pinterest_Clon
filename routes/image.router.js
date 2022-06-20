@@ -14,7 +14,7 @@ const validatorHandler = require("../middlewares/validator.handler");
 const {
   uploadImageHandler,
   helperImage,
-} = require("../middlewares/multer.handler");
+} = require("../middlewares/images.handler");
 const {
   createImageSchema,
   getImageSchema,
