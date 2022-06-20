@@ -8,7 +8,7 @@ const ImageSchema = {
     primaryKey: true,
     autoIncrement: true,
   },
-  name: {
+  title: {
     type: DataTypes.STRING,
     allowNull: false,
   },
@@ -16,19 +16,7 @@ const ImageSchema = {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  filename: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
-  path: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
-  originalname: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
-  mimetype: {
+  url_image: {
     type: DataTypes.STRING,
     allowNull: false,
   },

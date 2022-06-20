@@ -1,6 +1,7 @@
 const express = require("express");
 const passport = require("passport");
 const cloudinary = require("cloudinary");
+const fs = require("fs-extra");
 require("dotenv").config();
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_NAME,
@@ -118,21 +119,19 @@ router.post(
   uploadImageHandler.single("file"),
   async (req, res, next) => {
     try {
-      await helperImage(req.file.path, `resized-${req.file.filename}`);
-
-/*       const data = {
-        name: req.body.name,
+      const imageResize = await helperImage(req.file.path, `resized-${req.file.filename}`);
+      const imageCloudinary = await cloudinary.v2.uploader.upload(imageResize.path);
+      console.log(imageResize);
+      const data = {
+        title: req.body.title,
         description: req.body.description,
-        filename: req.file.filename,
-        path: req.file.path,
-        originalname: req.file.originalname,
-        mimetype: req.file.mimetype,
-        size: req.file.size,
+        url_image: imageCloudinary.url,
         userId: req.body.userId,
-      }; */
-      const result = await cloudinary.v2.uploader.upload(req.file.path)
-      console.log(result)
-      res.json(result);
+      };
+      const newImage = await service.create(data);
+      await fs.unlink(req.file.path)
+      await fs.unlink(imageResize.path)
+      res.json(newImage);
     } catch (e) {
       next(e);
     }

@@ -16,12 +16,15 @@ const uploadImageHandler = multer({
   storage,
 });
 
-const helperImage = (filePath, fileName) => {
-  return sharp(filePath).resize({
-    width: 300,
+const helperImage = async (filePath, fileName) => {
+ const resize = await sharp(filePath).resize({
+    width: 350,
     height: 500,
   }).toFile(path.join(__dirname, `../public/optimize/resized-${fileName}`));
-
+  return{
+    resize,
+    path: path.join(__dirname, `../public/optimize/resized-${fileName}`),
+  }
 };
 
 module.exports = {
