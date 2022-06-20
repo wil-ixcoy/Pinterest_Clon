@@ -21,7 +21,7 @@ const facebookStrategy = new FacebookStrategy(
   {
     clientID: process.env.FACEBOOK_APP_ID,
     clientSecret: process.env.FACEBOOK_APP_SECRET,
-    callbackURL: "http://localhost:3000/api/auth/facebook",
+    callbackURL: "https://infinite-meadow-99672.herokuapp.com/api/auth/facebook",
     profileFields: ["email"],
   },
 

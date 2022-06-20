@@ -20,7 +20,7 @@ const googleStrategy = new GoogleStrategy(
   {
     clientID: process.env.GOOGLE_CLIENT_ID,
     clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-    callbackURL: "http://localhost:3000/api/auth/google",
+    callbackURL: "https://infinite-meadow-99672.herokuapp.com/api/auth/google",
   },
 
   async (accessToken, refreshToken, profile, done) => {
