@@ -228,7 +228,7 @@ router.get(
 
 /**
  * @swagger
- * api/users/{id}/update:
+ * /api/users/{id}/update:
  *  patch:
  *    description: Actualiza un usuario, ni un dato es requerido, se puede cambiar un solo campo o varios, necesita token de autorizacion
  *    tags: [User]

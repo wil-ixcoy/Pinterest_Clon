@@ -171,7 +171,7 @@ router.get("/", async (req, res, next) => {
 /* obtener un solo imagen */
 /**
  * @swagger
- * /api/images/{id}/image:
+ * /api/images/{id}:
  *  get:
  *    description: Obtiene todas las imagenes
  *    tags: [Images]
@@ -201,7 +201,7 @@ router.get("/", async (req, res, next) => {
  *       description: Internal server error
  */
 router.get(
-  "/:id/image",
+  "/:id",
   validatorHandler(getImageSchema, "params"),
   passport.authenticate("jwt", { session: false }),
   async (req, res, next) => {
@@ -216,7 +216,7 @@ router.get(
 );
 /**
  * @swagger
- * api/images/{id}/update:
+ * /api/images/{id}/update:
  *  patch:
  *    description: Actualiza un usuario, ni un dato es requerido, se puede cambiar un solo campo o varios, necesita token de autorizacion
  *    tags: [Images]
