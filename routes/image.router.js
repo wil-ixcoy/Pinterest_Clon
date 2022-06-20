@@ -84,7 +84,7 @@ const service = new ImageService();
 
 /**
  * @swagger
- * /api/images:
+ * /api/images/upload:
  *  post:
  *    description: Sube una imagen
  *    tags: [Images]
@@ -110,7 +110,7 @@ const service = new ImageService();
  *
  */
 router.post(
-  "/",
+  "/upload",
   validatorHandler(createImageSchema, "body"),
   passport.authenticate("jwt", { session: false }),
   uploadImageHandler.single("file"),
@@ -119,10 +119,11 @@ router.post(
       const imageResize = await helperImage(req.file.path, `resized-${req.file.url_image}`);
       const imageCloudinary = await cloudinary.v2.uploader.upload(imageResize.path);
       console.log(imageResize);
+      console.log(imageCloudinary);
       const data = {
         title: req.body.title,
         description: req.body.description,
-        url_image: imageCloudinary.url,
+        url_image: imageCloudinary.secure_url,
         userId: req.body.userId,
       };
       const newImage = await service.create(data);
@@ -170,7 +171,7 @@ router.get("/", async (req, res, next) => {
 /* obtener un solo imagen */
 /**
  * @swagger
- * /api/images/{id}:
+ * /api/images/{id}/image:
  *  get:
  *    description: Obtiene todas las imagenes
  *    tags: [Images]
@@ -200,7 +201,7 @@ router.get("/", async (req, res, next) => {
  *       description: Internal server error
  */
 router.get(
-  "/:id",
+  "/:id/image",
   validatorHandler(getImageSchema, "params"),
   passport.authenticate("jwt", { session: false }),
   async (req, res, next) => {
@@ -215,7 +216,7 @@ router.get(
 );
 /**
  * @swagger
- * api/images/{id}:
+ * api/images/{id}/update:
  *  patch:
  *    description: Actualiza un usuario, ni un dato es requerido, se puede cambiar un solo campo o varios, necesita token de autorizacion
  *    tags: [Images]
@@ -250,7 +251,7 @@ router.get(
  *       description: Internal server error
  */
 router.patch(
-  "/:id",
+  "/:id/update",
   validatorHandler(getImageSchema, "params"),
   validatorHandler(updateImageSchema, "body"),
   passport.authenticate("jwt", { session: false }),
@@ -268,7 +269,7 @@ router.patch(
 
 /**
  * @swagger
- * /api/images/{id}:
+ * /api/images/{id}/delete:
  *  delete:
  *    description: elimina un usuario, necesita token de autorizacion
  *    tags: [Images]
@@ -300,7 +301,7 @@ router.patch(
  *       description: Internal server error
  */
 router.delete(
-  "/:id",
+  "/:id/delete",
   passport.authenticate("jwt", { session: false }),
   validatorHandler(getImageSchema, "params"),
 

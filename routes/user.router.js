@@ -98,7 +98,7 @@ const authService = new AuthService();
 
 /**
  * @swagger
- * /api/users:
+ * /api/users/create:
  *  post:
  *    description: Crea un nuevo usuario
  *    tags: [User]
@@ -126,7 +126,7 @@ const authService = new AuthService();
  *
  */
 router.post(
-  "/",
+  "/create",
   validatorHandler(createUserSchema, "body"),
   async (req, res, next) => {
     try {
@@ -182,7 +182,7 @@ router.get("/", async (req, res, next) => {
 /* obtener un solo usuario */
 /**
  * @swagger
- * /api/users/{id}:
+ * /api/users/{id}/user:
  *  get:
  *    description: Obtiene un solo usuario, necesita token de autorizacion
  *    tags: [User]
@@ -212,7 +212,7 @@ router.get("/", async (req, res, next) => {
  *       description: Internal server error
  */
 router.get(
-  "/:id",
+  "/:id/user",
   validatorHandler(getUserSchema, "params"),
   passport.authenticate("jwt", { session: false }),
   async (req, res, next) => {
@@ -228,7 +228,7 @@ router.get(
 
 /**
  * @swagger
- * api/users/{id}:
+ * api/users/{id}/update:
  *  patch:
  *    description: Actualiza un usuario, ni un dato es requerido, se puede cambiar un solo campo o varios, necesita token de autorizacion
  *    tags: [User]
@@ -263,7 +263,7 @@ router.get(
  *       description: Internal server error
  */
 router.patch(
-  "/:id",
+  "/:id/update",
   validatorHandler(getUserSchema, "params"),
   validatorHandler(updateUserSchema, "body"),
   passport.authenticate("jwt", { session: false }),
@@ -281,7 +281,7 @@ router.patch(
 
 /**
  * @swagger
- * /api/users/{id}:
+ * /api/users/{id}/delete:
  *  delete:
  *    description: elimina un usuario, necesita token de autorizacion
  *    tags: [User]
@@ -313,7 +313,7 @@ router.patch(
  *       description: Internal server error
  */
 router.delete(
-  "/:id",
+  "/:id/delete",
   validatorHandler(getUserSchema, "params"),
   passport.authenticate("jwt", { session: false }),
   async (req, res) => {
