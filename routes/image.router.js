@@ -171,13 +171,13 @@ router.get("/", async (req, res, next) => {
 /* obtener un solo imagen */
 /**
  * @swagger
- * /api/images/{id}:
+ * /api/images/{id}/image:
  *  get:
  *    description: Obtiene todas las imagenes
  *    tags: [Images]
-  *    parameters:
+ *    parameters:
  *     - in: path
- *       title: id
+ *       name: id
  *       schema:
  *        type: number
  *    responses:
@@ -201,7 +201,7 @@ router.get("/", async (req, res, next) => {
  *       description: Internal server error
  */
 router.get(
-  "/:id",
+  "/:id/image",
   validatorHandler(getImageSchema, "params"),
   passport.authenticate("jwt", { session: false }),
   async (req, res, next) => {
@@ -218,11 +218,11 @@ router.get(
  * @swagger
  * /api/images/{id}/update:
  *  patch:
- *    description: Actualiza un usuario, ni un dato es requerido, se puede cambiar un solo campo o varios, necesita token de autorizacion
+ *    description: Actualiza un imagen, ni un dato es requerido, se puede cambiar un solo campo o varios, necesita token de autorizacion
  *    tags: [Images]
  *    parameters:
  *     - in: path
- *       title: id
+ *       name: id
  *       schema:
  *        type: number
  *    requestBody:
@@ -232,7 +232,7 @@ router.get(
  *             $ref: '#/components/schemas/ImageUpdate'
  *    responses:
  *      200:
- *       description: Datos actualizados.retorna toda la información del usuario
+ *       description: Datos actualizados.retorna toda la información del imagen
  *       content:
  *        application/json:
  *          schema:
@@ -271,16 +271,16 @@ router.patch(
  * @swagger
  * /api/images/{id}/delete:
  *  delete:
- *    description: elimina un usuario, necesita token de autorizacion
+ *    description: elimina una imagen, necesita token de autorizacion
  *    tags: [Images]
  *    parameters:
  *     - in: path
- *       title: id
+ *       name: id
  *       schema:
  *        type: number
  *    responses:
  *      200:
- *       description: Usuario eliminado
+ *       description: imagen eliminada
  *       content:
  *        application/json:
  *         schema:
@@ -288,7 +288,7 @@ router.patch(
  *          properties:
  *           message:
  *            type: string
- *          example: "User deleted"
+ *          example: "imagen eliminada"
  *      400:
  *       description: Bad request
  *      401:
