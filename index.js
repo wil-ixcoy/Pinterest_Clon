@@ -23,7 +23,19 @@ app.use(session({ secret: "secret" }));
 /* serializarion y deserilizaion del usuario en passport al iniciar sesion */
 app.use(passport.initialize());
 app.use(passport.session());
-app.use(cors());
+
+const whitelist = ['http://localhost:8080', 'https://myapp.co'];
+const options = {
+  origin: (origin, callback) => {
+    if (whitelist.includes(origin) || !origin) {
+      callback(null, true);
+    } else {
+      callback(new Error('no permitido'));
+    }
+  },
+};
+
+app.use(cors(options));
 indexRouter(app);
 
 /* use swagger */
