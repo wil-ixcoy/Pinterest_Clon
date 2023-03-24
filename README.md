@@ -12,8 +12,7 @@ Y para el almacenamiento de imagenes en la nube se usó Cloudinary.
 ![](https://img.shields.io/badge/Facebook-1877F2?style=for-the-badge&logo=facebook&logoColor=white) ![](https://img.shields.io/badge/Google_Cloud-4285F4?style=for-the-badge&logo=google-cloud&logoColor=white)
 
 **Despliegue en:**
-
-![](https://img.shields.io/badge/Heroku-430098?style=for-the-badge&logo=heroku&logoColor=white)
+Railway
 
 ---
 
@@ -49,9 +48,8 @@ Ya teniendo tu cuenta puedes comenzar a utilizar la sección de imagenes, para e
 
 ## ¿Deseas saber más?
 Ve la documentación: 
-[Documentación](https://infinite-meadow-99672.herokuapp.com/api/docs/ "Documentación")
+[Documentación](https://pinterestclon-production.up.railway.app/api/docs "Documentación")
 
-Repositorio de gitHub: [Clon de Pinterest](https://github.com/wiliamsTI/Clon_Pinterest)
 
 
 ## Licencia
