@@ -28,7 +28,7 @@ const swaggerSpect = {
       <p>Además, las imagenes son redimensionadas para no perder el tamaño y tener uniformidad en el frontend</p>
       <br>
           <a href="https://www.linkedin.com/in/wiliamsixcoy/">Perfil de linkedIn 💙</a> <br>
-          <a href="https://github.com/wil-ixcoy/Clon_Pinterest">Link del repositorio en GitHub 🖤</a> <br>
+          <a href="https://github.com/wil-ixcoy/Pinterest_Clon">Link del repositorio en GitHub 🖤</a> <br>
           <a href="https://twitter.com/wil_ixcoy">Perfil de Twitter 💚</a>
           <br>
           <br>

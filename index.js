@@ -61,7 +61,7 @@ app.get("/", (req, res) => {
     <h3><b>Si quieres conocerme, estas son mis redes👇:</b></h3>
         <h4><a href="https://www.linkedin.com/in/wiliamsixcoy/" style="text-decoration:none;">Mi perfil de linkedIn 💙</a> </h4>
         <h4><a href="https://twitter.com/wil_ixcoy" style="text-decoration:none;">Mi Perfil de Twitter 💚</a> </h4>
-        <h4><a href="https://github.com/wil-ixcoy/Clon_Pinterest" style="text-decoration:none;">Link del proyecto en GitHub 🖤</a> </h4>
+        <h4><a href="https://github.com/wil-ixcoy/Pinterest_Clon" style="text-decoration:none;">Link del proyecto en GitHub 🖤</a> </h4>
         <br>
     <h3><b>Escribeme :)</b></h3>
         `);
