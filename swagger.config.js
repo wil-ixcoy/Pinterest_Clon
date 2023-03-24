@@ -27,9 +27,9 @@ const swaggerSpect = {
       <p>Todas las acciones requiren del token.</p>
       <p>Además, las imagenes son redimensionadas para no perder el tamaño y tener uniformidad en el frontend</p>
       <br>
-          <a href="https://www.linkedin.com/in/wiliams-ixcoy-656074229/">Perfil de linkedIn 💙</a> <br>
-          <a href="https://github.com/wiliamsTI/Clon_Pinterest">Link del repositorio en GitHub 🖤</a> <br>
-          <a href="https://twitter.com/wiliamsTI">Perfil de Twitter 💚</a>
+          <a href="https://www.linkedin.com/in/wiliamsixcoy/">Perfil de linkedIn 💙</a> <br>
+          <a href="https://github.com/wil-ixcoy/Clon_Pinterest">Link del repositorio en GitHub 🖤</a> <br>
+          <a href="https://twitter.com/wil_ixcoy">Perfil de Twitter 💚</a>
           <br>
           <br>
           <h4>Wiliams Alexander Tzoc Ixcoy, 15 de Junio de 2,022</h4>
@@ -54,7 +54,7 @@ const swaggerSpect = {
         description: 'Localhost',
       },
       {
-        url: 'https://infinite-meadow-99672.herokuapp.com/',
+        url: 'https://pinterestclon-production.up.railway.app/',
         description: 'Heroku',
       },
     ],
